@@ -18,9 +18,11 @@ class ViewController: UIViewController {
         var itemCount: Int {
             switch self {  // SectionKind
             case .first:
-                return 2
-            default:
                 return 1
+            case .second:
+                return 3
+            case .third:
+                return 2
             }
         }
         
@@ -29,6 +31,10 @@ class ViewController: UIViewController {
             switch self {
             case .first:
                 return .fractionalWidth(0.9)  // same width and same height
+//            case .second:
+//                return .fractionalWidth(0.9)
+//            case .third:
+//            return .fractionalWidth(0.9)
             default:
                 return .fractionalWidth(0.45)
             }
@@ -37,12 +43,23 @@ class ViewController: UIViewController {
         var sectionTitle: String {
             switch self {
             case .first:
-                return "First Section"
+                return "Featured"
             case .second:
-                return "Second Section"
+                return "New to iPhone"
             case .third:
-                return "Third Section"
+                return "Made for Kids"
             }
+        }
+        
+        var orthogonalBehaviour: UICollectionLayoutSectionOrthogonalScrollingBehavior {
+          switch self {
+          case .first:
+            return .continuous
+          case .second:
+            return .groupPaging
+          case .third:
+            return .groupPagingCentered
+          }
         }
     }
     
@@ -87,15 +104,15 @@ class ViewController: UIViewController {
             item.contentInsets = NSDirectionalEdgeInsets(top: itemSpacing, leading: itemSpacing, bottom: itemSpacing, trailing: itemSpacing)
             
             // group
-            let innerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .fractionalHeight(1.0))
+            let innerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerGroupSize, subitem: item, count: sectionKind.itemCount) // 1,2
             
-            let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: sectionKind.nestedGroupHeight)
+            let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95), heightDimension: sectionKind.nestedGroupHeight)
             let nestedGroup = NSCollectionLayoutGroup.horizontal(layoutSize: nestedGroupSize, subitems: [innerGroup])
             
             // section
             let section = NSCollectionLayoutSection(group: nestedGroup)
-            section.orthogonalScrollingBehavior = .continuous
+            section.orthogonalScrollingBehavior = sectionKind.orthogonalBehaviour
             
             // section Header
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
