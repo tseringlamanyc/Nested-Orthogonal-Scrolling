@@ -15,12 +15,22 @@ class ViewController: UIViewController {
         case third
         
         // computed property :- will return the # of items to vertically stack
-        var intCount: Int {
+        var itemCount: Int {
             switch self {  // SectionKind
             case .first:
                 return 2
             default:
                 return 1
+            }
+        }
+        
+        // nested group height
+        var nestedGroupHeight: NSCollectionLayoutDimension {
+            switch self {
+            case .first:
+                return .fractionalWidth(1.0)  // same width and same height
+            default:
+                return .fractionalWidth(0.5)
             }
         }
     }
@@ -42,15 +52,26 @@ class ViewController: UIViewController {
         
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             
+            // figure out what section we are dealing with
+            guard let sectionKind = SectionKind(rawValue: sectionIndex) else {
+                fatalError()
+            }
+            
             // item
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             // group
             let innerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .fractionalHeight(1.0))
-            let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerGroupSize, subitem: item, count: 2)
+            let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerGroupSize, subitem: item, count: sectionKind.itemCount) // 1,2
+            
+            let nestedGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: sectionKind.nestedGroupHeight)
+            let nestedGroup = NSCollectionLayoutGroup.horizontal(layoutSize: nestedGroupSize, subitems: [innerGroup])
             
             // section
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            
+            return section 
         }
         return layout
     }
