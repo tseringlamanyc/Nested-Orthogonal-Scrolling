@@ -13,6 +13,7 @@
 		84227888256DED6C009106AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84227886256DED6C009106AE /* Main.storyboard */; };
 		8422788A256DED6D009106AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84227889256DED6D009106AE /* Assets.xcassets */; };
 		8422788D256DED6D009106AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8422788B256DED6D009106AE /* LaunchScreen.storyboard */; };
+		84227896256DEDB7009106AE /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84227895256DEDB7009106AE /* LabelCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		84227889256DED6D009106AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8422788C256DED6D009106AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8422788E256DED6D009106AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84227895256DEDB7009106AE /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				84227880256DED6C009106AE /* AppDelegate.swift */,
 				84227882256DED6C009106AE /* SceneDelegate.swift */,
 				84227884256DED6C009106AE /* ViewController.swift */,
+				84227895256DEDB7009106AE /* LabelCell.swift */,
 				84227886256DED6C009106AE /* Main.storyboard */,
 				84227889256DED6D009106AE /* Assets.xcassets */,
 				8422788B256DED6D009106AE /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			files = (
 				84227885256DED6C009106AE /* ViewController.swift in Sources */,
 				84227881256DED6C009106AE /* AppDelegate.swift in Sources */,
+				84227896256DEDB7009106AE /* LabelCell.swift in Sources */,
 				84227883256DED6C009106AE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
