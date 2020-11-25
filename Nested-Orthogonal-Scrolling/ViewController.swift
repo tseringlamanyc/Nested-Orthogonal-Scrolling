@@ -42,6 +42,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCollectionView()
+        configureDataSource()
+    }
+    
+    private func configureCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.backgroundColor = .systemBackground
+        collectionView.register(LabelCell.self, forCellWithReuseIdentifier: LabelCell.reuseIdentifier)
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(collectionView)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -71,11 +81,36 @@ class ViewController: UIViewController {
             // section
             let section = NSCollectionLayoutSection(group: nestedGroup)
             
-            return section 
+            return section
         }
         return layout
     }
 
+    private func configureDataSource() {
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LabelCell.reuseIdentifier, for: indexPath) as? LabelCell else {
+                fatalError()
+            }
+            
+            cell.textLabel.text = "\(item)"
+            cell.backgroundColor = .systemRed
+            cell.layer.cornerRadius = 10
+            return cell
+        })
+        
+        // initial snapshot
+        var snapshot = NSDiffableDataSourceSnapshot<SectionKind, Int>()
+        
+        snapshot.appendSections([.first, .second, .third])
+        
+        // populate 3 sections
+        snapshot.appendItems(Array(1...20), toSection: .first)
+        snapshot.appendItems(Array(21...40), toSection: .second)
+        snapshot.appendItems(Array(41...60), toSection: .third)
+        
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
 
 }
 
